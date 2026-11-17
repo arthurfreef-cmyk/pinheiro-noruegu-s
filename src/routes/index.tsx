@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
-import { Search, ShoppingCart, Heart, ChevronRight, MapPin, ShieldCheck, Truck, Store, MessageCircle, ThumbsUp, ChevronDown, Camera, Info } from "lucide-react";
+import { Search, ShoppingCart, Heart, ChevronRight, MapPin, ShieldCheck, Truck, Store, MessageCircle, ThumbsUp, ChevronDown, Info } from "lucide-react";
 import arvore from "@/assets/arvore.webp.asset.json";
 
 export const Route = createFileRoute("/")({
@@ -79,12 +79,7 @@ function Produto() {
               <button onClick={()=>setFoto((foto+1)%fotos.length)} className="flex min-h-[300px] flex-1 items-center justify-center bg-white sm:min-h-[430px]" aria-label="Próxima foto"><img src={fotos[foto]} alt="Árvore de Natal Pinheiro Norueguês do Norte com luzes LED" className="max-h-[430px] w-full object-contain"/></button>
             </div>
             <div className="mt-3 flex justify-center gap-2 sm:hidden">{fotos.map((_,i)=><button key={i} onClick={()=>setFoto(i)} aria-label={`Foto ${i+1}`} className={`h-1.5 w-5 rounded-full ${foto===i?"bg-[#3483fa]":"bg-gray-300"}`}/>)}</div>
-            <div className="mt-5 border-t pt-4">
-              <h3 className="font-semibold">O que você precisa saber sobre este produto</h3>
-              <ul className="mt-3 list-disc space-y-2 pl-5 text-[13px] leading-relaxed text-[#555]">
-                <li>Galhos densos em dois tons de verde e aparência natural.</li><li>Luzes LED em branco quente distribuídas pelos galhos.</li><li>Base metálica dobrável e montagem em partes encaixáveis.</li><li>Disponível em três alturas: 1,80 m, 2,10 m e 2,40 m.</li>
-              </ul>
-            </div>
+
           </div>
 
           <div className="min-w-0">
@@ -104,11 +99,7 @@ function Produto() {
               <p className="mt-3 text-[13px] font-semibold">Altura: <span className="font-normal">{s.label}</span></p>
               <div className="mt-2 flex flex-wrap gap-2">{tamanhos.map((x,i)=><button key={x.label} onClick={()=>setT(i)} className={`rounded border px-3 py-2 text-[12px] ${i===t?"border-[#3483fa] bg-[#f5faff] text-[#3483fa]":"border-gray-300"}`}>{x.label}</button>)}</div>
             </div>
-            <div className="mt-5 border-t pt-4">
-              <h3 className="text-[15px] font-semibold">Características do produto</h3>
-              <div className="mt-3 grid grid-cols-2 gap-3 text-[12px]"><div><span className="block text-[#999]">Marca</span>Pinheiro Norueguês</div><div><span className="block text-[#999]">Modelo</span>Árvore iluminada</div><div><span className="block text-[#999]">Material</span>PE + PVC</div><div><span className="block text-[#999]">Iluminação</span>LED branco quente</div></div>
-              <button onClick={()=>setAba("Ficha técnica")} className="mt-4 text-[12px] text-[#3483fa]">Conferir todas as características <ChevronDown size={13} className="inline"/></button>
-            </div>
+
           </div>
 
           <aside className="min-w-0 space-y-3">
@@ -127,12 +118,6 @@ function Produto() {
         </div>
       </section>
 
-      <section className="mt-4 rounded-md bg-white p-4 shadow-sm sm:p-6">
-        <h2 className="text-xl font-medium text-[#174b35]">Produtos relacionados</h2>
-        <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">{["Árvore de Natal Pinheiro Norueguês","Árvore de Natal com LED","Pinheiro de Natal decorativo","Árvore de Natal tradicional"].map((name,i)=><button key={i} onClick={showTestNotice} className="rounded border border-[#eee] p-2 text-left transition hover:shadow-md"><img src={arvore.url} alt={name} className="h-32 w-full object-contain"/><p className="mt-2 text-[12px]">{name}</p><p className="mt-2 text-lg">{brl(s.preco)}</p><p className="text-[11px] text-[#00a650]">Frete grátis · demonstração</p></button>)}</div>
-      </section>
-
-      <section className="mt-4 rounded-md bg-white p-4 shadow-sm sm:p-6">
       <section className="mt-4 rounded-md bg-white p-4 shadow-sm sm:p-6">
         <h2 className="text-lg font-medium">Produtos da loja</h2>
         <p className="mt-1 text-[12px] text-[#777]">Outros itens demonstrativos da mesma vitrine.</p>
@@ -160,8 +145,6 @@ function Produto() {
         <h2 className="text-lg font-medium">Fotos do produto</h2>
         <p className="mt-1 text-[12px] text-[#777]">Imagem disponível no cadastro atual do produto.</p>
         <div className="mt-4 flex justify-center"><img src={arvore.url} alt="Pinheiro Norueguês com iluminação LED" className="max-h-[520px] w-full max-w-[680px] object-contain"/></div>
-      </section>
-
         <div className="flex flex-wrap gap-5 border-b text-[14px]">{["Descrição","Ficha técnica","Avaliações"].map(k=><button key={k} onClick={()=>setAba(k)} className={`border-b-2 pb-3 ${aba===k?"border-[#3483fa] font-semibold text-[#3483fa]":"border-transparent text-[#666]"}`}>{k}</button>)}</div>
         {aba==="Descrição"&&<div className="max-w-3xl py-5 text-[13px] leading-7 text-[#555]"><h2 className="mb-3 text-lg font-medium text-[#333]">Árvore de Natal Pinheiro Norueguês</h2><p>Inspirada nas florestas do norte da Noruega, esta árvore traz galhos densos em dois tons de verde, com pontas moldadas que imitam as agulhas de um pinheiro natural.</p><p className="mt-3">O modelo demonstrativo possui luzes LED em branco quente distribuídas pelos galhos, base metálica dobrável e montagem em partes encaixáveis.</p><div className="mt-5 grid gap-3 sm:grid-cols-3"><div className="rounded bg-[#f5f5f5] p-3"><b>Visual natural</b><p className="text-[12px]">Galhos verdes e volumosos.</p></div><div className="rounded bg-[#f5f5f5] p-3"><b>Luzes LED</b><p className="text-[12px]">Iluminação branco quente.</p></div><div className="rounded bg-[#f5f5f5] p-3"><b>Montagem prática</b><p className="text-[12px]">Estrutura em partes encaixáveis.</p></div></div></div>}
         {aba==="Ficha técnica"&&<div className="grid max-w-4xl gap-8 py-5 md:grid-cols-2"><div><h3 className="mb-3 font-semibold">Características principais</h3>{[["Marca","Pinheiro Norueguês"],["Modelo","Árvore iluminada"],["Formato","Tradicional"],["Cor","Verde"]].map(([k,v])=><div key={k} className="grid grid-cols-2 border-b bg-[#f5f5f5] px-3 py-3 text-[12px] even:bg-white"><span>{k}</span><b className="font-normal">{v}</b></div>)}</div><div><h3 className="mb-3 font-semibold">Peso e dimensões</h3>{[["Alturas disponíveis","1,80 m · 2,10 m · 2,40 m"],["Materiais","PE + PVC e metal"],["Iluminação","LED branco quente"],["Base","Metal dobrável"],["Montagem","Partes encaixáveis"]].map(([k,v])=><div key={k} className="grid grid-cols-2 border-b bg-[#f5f5f5] px-3 py-3 text-[12px] even:bg-white"><span>{k}</span><b className="font-normal">{v}</b></div>)}</div></div>}
@@ -173,19 +156,13 @@ function Produto() {
       </section>
 
       <section className="mt-4 rounded-md bg-white p-4 shadow-sm sm:p-6">
-        <div className="flex items-center gap-2"><MessageCircle size={20} className="text-[#3483fa]"/><h2 className="text-xl font-medium text-[#174b35]">Dúvidas sobre o produto</h2></div>
+        <div className="flex items-center gap-2"><MessageCircle size={20} className="text-[#3483fa]"/><h2 className="text-xl font-medium text-[#174b35]">Perguntas</h2></div>
         <p className="mt-1 text-[12px] text-[#777]">Respostas ilustrativas para demonstração do componente.</p>
         <div className="mt-4 max-w-4xl divide-y">{perguntas.map(([q,a],i)=><div key={q} className="py-4"><button onClick={()=>setPerguntaAberta(perguntaAberta===i?null:i)} className="flex w-full items-center justify-between text-left text-[13px] font-medium"><span>{q}</span><ChevronDown size={16} className={perguntaAberta===i?"rotate-180 transition":"transition"}/></button>{perguntaAberta===i&&<div className="mt-3 rounded bg-[#f7f7f7] p-3 text-[13px] text-[#666]"><b>Resposta:</b> {a}</div>}</div>)}</div>
       </section>
 
       <section className="mt-4 rounded-md bg-white p-4 shadow-sm sm:p-6">
-        <div className="flex items-center gap-2"><Camera size={20} className="text-[#3483fa]"/><h2 className="text-xl font-medium text-[#174b35]">Detalhes do produto</h2></div>
-        <p className="mt-1 text-[11px] text-[#888]">Imagem de demonstração do produto cadastrado.</p>
-        <div className="mt-5 flex justify-center"><img src={arvore.url} alt="Foto demonstrativa da árvore de Natal Pinheiro Norueguês" className="max-h-[520px] w-full max-w-[650px] object-contain"/></div>
-      </section>
-
-      <section className="mt-4 rounded-md bg-white p-4 shadow-sm sm:p-6">
-        <h2 className="text-lg font-medium">Quem viu este produto também se interessou</h2>
+        <h2 className="text-lg font-medium">Quem viu este produto também comprou</h2>
         <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
           {["Decoração de Natal","Enfeites natalinos","Iluminação decorativa","Árvores de Natal"].map((name)=><div key={name} className="rounded border border-[#eee] p-3"><div className="flex h-24 items-center justify-center bg-[#fafafa] text-3xl text-[#28734b]">✦</div><p className="mt-2 text-[12px]">{name}</p><p className="mt-1 text-[11px] text-[#777]">Sugestão ilustrativa</p></div>)}
         </div>
