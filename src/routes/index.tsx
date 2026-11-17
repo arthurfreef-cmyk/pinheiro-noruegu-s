@@ -50,7 +50,7 @@ function Produto() {
   const [t, setT] = useState(0);
   const [qtd, setQtd] = useState(1);
   const [aba, setAba] = useState<keyof typeof abas>("Descrição");
-  const s = tamanhos[t];
+  const s = tamanhos[t] ?? tamanhos[0]!;
   const off = Math.round((1 - s.preco / s.de) * 100);
   return (
     <div className="min-h-screen bg-background font-sans text-foreground">
