@@ -145,20 +145,35 @@ function Produto() {
         <h2 className="text-lg font-medium">Fotos do produto</h2>
         <p className="mt-1 text-[12px] text-[#777]">Imagem disponível no cadastro atual do produto.</p>
         <div className="mt-4 flex justify-center"><img src={arvore.url} alt="Pinheiro Norueguês com iluminação LED" className="max-h-[520px] w-full max-w-[680px] object-contain"/></div>
-        <div className="flex flex-wrap gap-5 border-b text-[14px]">{["Descrição","Ficha técnica","Avaliações"].map(k=><button key={k} onClick={()=>setAba(k)} className={`border-b-2 pb-3 ${aba===k?"border-[#3483fa] font-semibold text-[#3483fa]":"border-transparent text-[#666]"}`}>{k}</button>)}</div>
-        {aba==="Descrição"&&<div className="max-w-3xl py-5 text-[13px] leading-7 text-[#555]"><h2 className="mb-3 text-lg font-medium text-[#333]">Árvore de Natal Pinheiro Norueguês</h2><p>Inspirada nas florestas do norte da Noruega, esta árvore traz galhos densos em dois tons de verde, com pontas moldadas que imitam as agulhas de um pinheiro natural.</p><p className="mt-3">O modelo demonstrativo possui luzes LED em branco quente distribuídas pelos galhos, base metálica dobrável e montagem em partes encaixáveis.</p><div className="mt-5 grid gap-3 sm:grid-cols-3"><div className="rounded bg-[#f5f5f5] p-3"><b>Visual natural</b><p className="text-[12px]">Galhos verdes e volumosos.</p></div><div className="rounded bg-[#f5f5f5] p-3"><b>Luzes LED</b><p className="text-[12px]">Iluminação branco quente.</p></div><div className="rounded bg-[#f5f5f5] p-3"><b>Montagem prática</b><p className="text-[12px]">Estrutura em partes encaixáveis.</p></div></div></div>}
-        {aba==="Ficha técnica"&&<div className="grid max-w-4xl gap-8 py-5 md:grid-cols-2"><div><h3 className="mb-3 font-semibold">Características principais</h3>{[["Marca","Pinheiro Norueguês"],["Modelo","Árvore iluminada"],["Formato","Tradicional"],["Cor","Verde"]].map(([k,v])=><div key={k} className="grid grid-cols-2 border-b bg-[#f5f5f5] px-3 py-3 text-[12px] even:bg-white"><span>{k}</span><b className="font-normal">{v}</b></div>)}</div><div><h3 className="mb-3 font-semibold">Peso e dimensões</h3>{[["Alturas disponíveis","1,80 m · 2,10 m · 2,40 m"],["Materiais","PE + PVC e metal"],["Iluminação","LED branco quente"],["Base","Metal dobrável"],["Montagem","Partes encaixáveis"]].map(([k,v])=><div key={k} className="grid grid-cols-2 border-b bg-[#f5f5f5] px-3 py-3 text-[12px] even:bg-white"><span>{k}</span><b className="font-normal">{v}</b></div>)}</div></div>}
-        {aba==="Avaliações"&&<div className="py-5">
-          <div className="mb-6 border-b pb-5"><h3 className="text-base font-semibold text-[#174b35]">Área de avaliações — demonstração</h3><p className="mt-1 text-[12px] text-[#777]">Este protótipo não está conectado a avaliações reais. Nenhuma nota ou opinião de comprador é apresentada como autêntica.</p></div>
-          <div className="mb-4 rounded border border-[#f0d982] bg-[#fff9df] p-3 text-[11px] text-[#6b5710]"><Info size={14} className="mr-1 inline"/> Conteúdo de exemplo para visualizar o layout. Não representa clientes, compras ou avaliações reais.</div>
-          <div className="max-w-3xl space-y-5">{reviews.map((r)=><article key={r.nome} className="border-b pb-5"><div className="flex items-center justify-between"><span className="text-[13px] font-semibold">{r.nome}</span><span className="text-[11px] text-[#999]">{r.data}</span></div><div className="mt-1 text-[13px] tracking-[1px] text-[#3483fa]">Avaliação ilustrativa</div><p className="mt-2 text-[13px] leading-6 text-[#555]">{r.texto}</p><div className="mt-3 flex items-center gap-1 text-[11px] text-[#777]"><Info size={13}/> Conteúdo de demonstração</div></article>)}</div>
-        </div>}
+      </section>
+
+      <section className="mt-4 rounded-md bg-white p-4 shadow-sm sm:p-6">
+        <h2 className="text-lg font-medium">Descrição</h2>
+        <div className="mt-4 max-w-3xl text-[13px] leading-7 text-[#666]">
+          <h3 className="mb-3 text-base font-medium text-[#333]">Árvore de Natal Pinheiro Norueguês</h3>
+          <p>Inspirada nas florestas do norte da Noruega, esta árvore traz galhos densos em dois tons de verde, com pontas moldadas que imitam as agulhas de um pinheiro natural.</p>
+          <p className="mt-3">O modelo demonstrativo possui luzes LED em branco quente distribuídas pelos galhos, base metálica dobrável e montagem em partes encaixáveis.</p>
+        </div>
       </section>
 
       <section className="mt-4 rounded-md bg-white p-4 shadow-sm sm:p-6">
         <div className="flex items-center gap-2"><MessageCircle size={20} className="text-[#3483fa]"/><h2 className="text-xl font-medium text-[#174b35]">Perguntas</h2></div>
         <p className="mt-1 text-[12px] text-[#777]">Respostas ilustrativas para demonstração do componente.</p>
         <div className="mt-4 max-w-4xl divide-y">{perguntas.map(([q,a],i)=><div key={q} className="py-4"><button onClick={()=>setPerguntaAberta(perguntaAberta===i?null:i)} className="flex w-full items-center justify-between text-left text-[13px] font-medium"><span>{q}</span><ChevronDown size={16} className={perguntaAberta===i?"rotate-180 transition":"transition"}/></button>{perguntaAberta===i&&<div className="mt-3 rounded bg-[#f7f7f7] p-3 text-[13px] text-[#666]"><b>Resposta:</b> {a}</div>}</div>)}</div>
+      </section>
+
+      <section className="mt-4 rounded-md bg-white p-4 shadow-sm sm:p-6">
+        <h2 className="text-lg font-medium">Opiniões do produto</h2>
+        <div className="mt-4 grid gap-6 md:grid-cols-[220px_1fr]">
+          <div className="border-b pb-4 md:border-b-0 md:border-r md:pb-0 md:pr-5">
+            <p className="text-[13px] font-semibold">Avaliações</p>
+            <p className="mt-2 text-[12px] leading-5 text-[#777]">Ainda não há avaliações reais conectadas a esta demonstração.</p>
+          </div>
+          <div className="space-y-3">
+            <p className="text-[13px] font-medium">Fotos e comentários de compradores</p>
+            <div className="rounded border border-dashed border-[#ccc] bg-[#fafafa] p-5 text-[12px] text-[#777]">As fotos e opiniões serão exibidas aqui quando houver avaliações reais. Nenhum comentário fictício é apresentado como experiência de cliente.</div>
+          </div>
+        </div>
       </section>
 
       <section className="mt-4 rounded-md bg-white p-4 shadow-sm sm:p-6">
