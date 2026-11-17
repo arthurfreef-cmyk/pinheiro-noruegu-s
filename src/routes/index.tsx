@@ -40,27 +40,27 @@ function Produto() {
   const fotos = [arvore.url];
   const showTestNotice = () => setAviso("Esta é uma página de teste. Nenhuma compra, reserva ou transação será realizada.");
 
-  return <div className="min-h-screen bg-[#f4f6f3] text-[#303b33]">
-    <header className="sticky top-0 z-40 border-b border-[#dce5dc] bg-white shadow-sm">
-      <div className="mx-auto flex max-w-[1240px] items-center gap-4 px-4 py-4">
+  return <div className="min-h-screen bg-[#ededed] text-[#333]">
+    <header className="sticky top-0 z-40 border-b border-[#e2c900] bg-[#fff159] shadow-sm">
+      <div className="mx-auto flex max-w-[1240px] items-center gap-4 px-4 py-3">
         <a href="/" className="flex shrink-0 items-center gap-2.5" aria-label="Pinheiro Norueguês — início">
-          <span className="flex h-10 w-10 items-center justify-center rounded-full bg-[#174b35] text-xl text-white">✦</span>
-          <span className="text-[17px] font-bold leading-[17px] tracking-[-.5px] text-[#174b35]">PINHEIRO<br/>NORUEGUÊS</span>
+          <span className="flex h-9 w-9 items-center justify-center rounded-full border-2 border-[#2d3277] bg-white text-sm font-bold text-[#2d3277]">PN</span>
+          <span className="hidden text-[16px] font-bold leading-[15px] tracking-[-.5px] text-[#2d3277] sm:block">PINHEIRO<br/>NORUEGUÊS</span>
         </a>
-        <div className="hidden min-w-[150px] flex-1 items-center rounded-lg border border-[#dce5dc] bg-[#f7faf7] px-3 py-2.5 sm:flex">
-          <input aria-label="Buscar nesta demonstração" placeholder="Buscar produtos..." className="min-w-0 flex-1 bg-transparent text-[14px] outline-none" />
-          <Search size={19} className="text-[#52715e]" />
+        <div className="hidden min-w-[150px] flex-1 items-center rounded-sm border border-[#eee] bg-white px-3 py-2.5 shadow-sm sm:flex">
+          <input aria-label="Buscar produtos nesta demonstração" placeholder="Buscar produtos, marcas e muito mais..." className="min-w-0 flex-1 text-[14px] outline-none" />
+          <Search size={19} className="text-[#555]" />
         </div>
-        <div className="ml-auto flex items-center gap-2 text-[12px] text-[#52715e]"><span className="hidden sm:inline">Decoração para momentos especiais</span>
-          <button onClick={showTestNotice} className="rounded-lg border border-[#dce5dc] p-2 text-[#174b35]" aria-label="Carrinho demonstrativo"><ShoppingCart size={21}/></button>
-        </div>
+        <div className="hidden items-center gap-2 rounded-full bg-white/70 px-3 py-2 text-[11px] text-[#2d3277] lg:flex"><MapPin size={16}/><span>Entrega demonstrativa<br/><b>Rio Branco</b></span></div>
+        <button onClick={showTestNotice} className="ml-auto rounded p-2 text-[#2d3277]" aria-label="Carrinho demonstrativo"><ShoppingCart size={22}/></button>
       </div>
-      <nav className="mx-auto flex max-w-[1240px] flex-wrap items-center gap-x-6 gap-y-2 px-4 pb-3 text-[12px] text-[#52715e]">
-        <span>Árvores de Natal</span><span>Decoração</span><span>Inspirações</span><span>Sobre o produto</span><span className="ml-auto">Atendimento demonstrativo</span>
+      <nav className="mx-auto flex max-w-[1240px] flex-wrap items-center justify-between gap-x-5 gap-y-2 px-4 pb-3 text-[12px] text-[#514b28]">
+        <div className="flex flex-wrap items-center gap-x-5 gap-y-2"><span>Categorias⌄</span><span>Ofertas</span><span>Árvores de Natal</span><span>Decoração</span><span>Inspirações</span><span>Atendimento</span></div>
+        <div className="flex items-center gap-4"><span>Conta demonstrativa</span><span>Compras</span></div>
       </nav>
     </header>
 
-    <div className="border-b border-[#e6ddba] bg-[#fbf7e9] px-3 py-2 text-center text-[11px] font-bold tracking-wide text-[#6b5b2d]">
+    <div className="border-b border-[#e4c64b] bg-[#fff8c5] px-3 py-2 text-center text-[11px] font-bold tracking-wide text-[#594d12]">
       <Info size={14} className="mr-1 inline-block"/> PÁGINA DE TESTE — NÃO É OFICIAL, NÃO REALIZA VENDAS E NÃO PROCESSA PAGAMENTOS.
     </div>
 
@@ -128,11 +128,40 @@ function Produto() {
       </section>
 
       <section className="mt-4 rounded-md bg-white p-4 shadow-sm sm:p-6">
-        <h2 className="text-xl font-medium text-[#174b35]">Outras opções para sua decoração</h2>
+        <h2 className="text-xl font-medium text-[#174b35]">Produtos relacionados</h2>
         <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">{["Árvore de Natal Pinheiro Norueguês","Árvore de Natal com LED","Pinheiro de Natal decorativo","Árvore de Natal tradicional"].map((name,i)=><button key={i} onClick={showTestNotice} className="rounded border border-[#eee] p-2 text-left transition hover:shadow-md"><img src={arvore.url} alt={name} className="h-32 w-full object-contain"/><p className="mt-2 text-[12px]">{name}</p><p className="mt-2 text-lg">{brl(s.preco)}</p><p className="text-[11px] text-[#00a650]">Frete grátis · demonstração</p></button>)}</div>
       </section>
 
       <section className="mt-4 rounded-md bg-white p-4 shadow-sm sm:p-6">
+      <section className="mt-4 rounded-md bg-white p-4 shadow-sm sm:p-6">
+        <h2 className="text-lg font-medium">Produtos da loja</h2>
+        <p className="mt-1 text-[12px] text-[#777]">Outros itens demonstrativos da mesma vitrine.</p>
+        <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
+          {["Pinheiro Norueguês com LED","Árvore de Natal decorativa","Pinheiro verde tradicional","Árvore iluminada"].map((name)=><article key={name} className="rounded border border-[#eee] p-3">
+            <div className="flex h-28 items-center justify-center bg-[#fafafa]"><span className="text-4xl text-[#28734b]">♧</span></div>
+            <p className="mt-2 text-[12px]">{name}</p><p className="mt-2 text-base font-medium">{brl(s.preco)}</p><p className="text-[11px] text-[#00a650]">Informação ilustrativa</p>
+          </article>)}
+        </div>
+      </section>
+
+      <section className="mt-4 rounded-md bg-white p-4 shadow-sm sm:p-6">
+        <h2 className="text-lg font-medium">Características do produto</h2>
+        <div className="mt-4 grid gap-8 md:grid-cols-2">
+          <div><h3 className="mb-2 text-[14px] font-semibold">Características principais</h3>
+            {[["Marca","Pinheiro Norueguês"],["Modelo","Árvore iluminada"],["Formato","Tradicional"],["Cor","Verde"]].map(([k,v])=><div key={k} className="grid grid-cols-2 border-b bg-[#f5f5f5] px-3 py-3 text-[12px] even:bg-white"><span>{k}</span><b className="font-normal">{v}</b></div>)}
+          </div>
+          <div><h3 className="mb-2 text-[14px] font-semibold">Especificações</h3>
+            {[["Alturas disponíveis","1,80 m · 2,10 m · 2,40 m"],["Materiais","PE + PVC e metal"],["Iluminação","LED branco quente"],["Base","Metal dobrável"],["Montagem","Partes encaixáveis"]].map(([k,v])=><div key={k} className="grid grid-cols-2 border-b bg-[#f5f5f5] px-3 py-3 text-[12px] even:bg-white"><span>{k}</span><b className="font-normal">{v}</b></div>)}
+          </div>
+        </div>
+      </section>
+
+      <section className="mt-4 rounded-md bg-white p-4 shadow-sm sm:p-6">
+        <h2 className="text-lg font-medium">Fotos do produto</h2>
+        <p className="mt-1 text-[12px] text-[#777]">Imagem disponível no cadastro atual do produto.</p>
+        <div className="mt-4 flex justify-center"><img src={arvore.url} alt="Pinheiro Norueguês com iluminação LED" className="max-h-[520px] w-full max-w-[680px] object-contain"/></div>
+      </section>
+
         <div className="flex flex-wrap gap-5 border-b text-[14px]">{["Descrição","Ficha técnica","Avaliações"].map(k=><button key={k} onClick={()=>setAba(k)} className={`border-b-2 pb-3 ${aba===k?"border-[#3483fa] font-semibold text-[#3483fa]":"border-transparent text-[#666]"}`}>{k}</button>)}</div>
         {aba==="Descrição"&&<div className="max-w-3xl py-5 text-[13px] leading-7 text-[#555]"><h2 className="mb-3 text-lg font-medium text-[#333]">Árvore de Natal Pinheiro Norueguês</h2><p>Inspirada nas florestas do norte da Noruega, esta árvore traz galhos densos em dois tons de verde, com pontas moldadas que imitam as agulhas de um pinheiro natural.</p><p className="mt-3">O modelo demonstrativo possui luzes LED em branco quente distribuídas pelos galhos, base metálica dobrável e montagem em partes encaixáveis.</p><div className="mt-5 grid gap-3 sm:grid-cols-3"><div className="rounded bg-[#f5f5f5] p-3"><b>Visual natural</b><p className="text-[12px]">Galhos verdes e volumosos.</p></div><div className="rounded bg-[#f5f5f5] p-3"><b>Luzes LED</b><p className="text-[12px]">Iluminação branco quente.</p></div><div className="rounded bg-[#f5f5f5] p-3"><b>Montagem prática</b><p className="text-[12px]">Estrutura em partes encaixáveis.</p></div></div></div>}
         {aba==="Ficha técnica"&&<div className="grid max-w-4xl gap-8 py-5 md:grid-cols-2"><div><h3 className="mb-3 font-semibold">Características principais</h3>{[["Marca","Pinheiro Norueguês"],["Modelo","Árvore iluminada"],["Formato","Tradicional"],["Cor","Verde"]].map(([k,v])=><div key={k} className="grid grid-cols-2 border-b bg-[#f5f5f5] px-3 py-3 text-[12px] even:bg-white"><span>{k}</span><b className="font-normal">{v}</b></div>)}</div><div><h3 className="mb-3 font-semibold">Peso e dimensões</h3>{[["Alturas disponíveis","1,80 m · 2,10 m · 2,40 m"],["Materiais","PE + PVC e metal"],["Iluminação","LED branco quente"],["Base","Metal dobrável"],["Montagem","Partes encaixáveis"]].map(([k,v])=><div key={k} className="grid grid-cols-2 border-b bg-[#f5f5f5] px-3 py-3 text-[12px] even:bg-white"><span>{k}</span><b className="font-normal">{v}</b></div>)}</div></div>}
@@ -155,9 +184,16 @@ function Produto() {
         <div className="mt-5 flex justify-center"><img src={arvore.url} alt="Foto demonstrativa da árvore de Natal Pinheiro Norueguês" className="max-h-[520px] w-full max-w-[650px] object-contain"/></div>
       </section>
 
+      <section className="mt-4 rounded-md bg-white p-4 shadow-sm sm:p-6">
+        <h2 className="text-lg font-medium">Quem viu este produto também se interessou</h2>
+        <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
+          {["Decoração de Natal","Enfeites natalinos","Iluminação decorativa","Árvores de Natal"].map((name)=><div key={name} className="rounded border border-[#eee] p-3"><div className="flex h-24 items-center justify-center bg-[#fafafa] text-3xl text-[#28734b]">✦</div><p className="mt-2 text-[12px]">{name}</p><p className="mt-1 text-[11px] text-[#777]">Sugestão ilustrativa</p></div>)}
+        </div>
+      </section>
+
       <footer className="mt-6 border-t border-[#ddd] py-7 text-center text-[11px] leading-6 text-[#777]">
         <b className="text-[#555]">PROTÓTIPO DE INTERFACE — NÃO OFICIAL</b><br/>
-        Esta é uma demonstração independente da interface Pinheiro Norueguês. Não anuncia uma oferta real, não confirma estoque ou frete e não realiza vendas nem processa pagamentos.<br/>
+        Esta é uma demonstração independente, com layout inspirado em páginas de marketplace. Não possui vínculo oficial com o Mercado Livre, não anuncia uma oferta real, não confirma estoque ou frete e não realiza vendas nem processa pagamentos.<br/>
         Produto e preço mantidos conforme o cadastro atual do projeto.
       </footer>
     </main>
