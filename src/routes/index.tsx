@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
-import { Search, ShoppingCart, Heart, ChevronRight, MapPin, ShieldCheck, Truck, Store, Star, MessageCircle, ThumbsUp, Check, ChevronDown, Camera, Info, Menu } from "lucide-react";
+import { Search, ShoppingCart, Heart, ChevronRight, MapPin, ShieldCheck, Truck, Store, MessageCircle, ThumbsUp, ChevronDown, Camera, Info } from "lucide-react";
 import arvore from "@/assets/arvore.webp.asset.json";
 
 export const Route = createFileRoute("/")({
