@@ -5,7 +5,7 @@ import arvore from "@/assets/arvore.webp.asset.json";
 
 export const Route = createFileRoute("/")({
   head: () => ({ meta: [
-    { title: "Árvore de Natal Pinheiro Norueguês | Protótipo de interface" },
+    { title: "Árvore de Natal com LED | Protótipo de marketplace" },
     { name: "description", content: "Demonstração visual de uma página de produto. Não realiza vendas." },
     { name: "robots", content: "noindex,nofollow" },
   ] }),
@@ -42,38 +42,38 @@ function Produto() {
 
   return <div className="min-h-screen bg-[#ededed] text-[#333]">
     <header className="sticky top-0 z-40 border-b border-[#e2c900] bg-[#fff159] shadow-sm">
-      <div className="mx-auto flex max-w-[1240px] items-center gap-4 px-4 py-3">
-        <a href="/" className="flex shrink-0 items-center gap-2.5" aria-label="Pinheiro Norueguês — início">
-          <span className="flex h-9 w-9 items-center justify-center rounded-full border-2 border-[#2d3277] bg-white text-sm font-bold text-[#2d3277]">PN</span>
-          <span className="hidden text-[16px] font-bold leading-[15px] tracking-[-.5px] text-[#2d3277] sm:block">PINHEIRO<br/>NORUEGUÊS</span>
+      <div className="mx-auto flex max-w-[1200px] items-center gap-3 px-4 py-3">
+        <a href="/" className="flex w-[150px] shrink-0 items-center gap-2 text-[#2d3277]" aria-label="Início do protótipo de marketplace">
+          <span className="flex h-10 w-10 items-center justify-center rounded-full border-[3px] border-[#2d3277] bg-white text-[17px] font-black">M</span>
+          <span className="hidden text-[15px] font-semibold leading-4 sm:block">Marketplace<br/><span className="text-[10px] font-normal">protótipo independente</span></span>
         </a>
-        <div className="hidden min-w-[150px] flex-1 items-center rounded-sm border border-[#eee] bg-white px-3 py-2.5 shadow-sm sm:flex">
+        <div className="flex min-w-[120px] flex-1 items-center rounded-sm border border-[#eee] bg-white px-3 py-2.5 shadow-sm">
           <input aria-label="Buscar produtos nesta demonstração" placeholder="Buscar produtos, marcas e muito mais..." className="min-w-0 flex-1 text-[14px] outline-none" />
           <Search size={19} className="text-[#555]" />
         </div>
-        <div className="hidden items-center gap-2 rounded-full bg-white/70 px-3 py-2 text-[11px] text-[#2d3277] lg:flex"><MapPin size={16}/><span>Entrega demonstrativa<br/><b>Rio Branco</b></span></div>
-        <button onClick={showTestNotice} className="ml-auto rounded p-2 text-[#2d3277]" aria-label="Carrinho demonstrativo"><ShoppingCart size={22}/></button>
+        <div className="hidden items-center gap-2 px-2 text-[11px] leading-4 text-[#2d3277] lg:flex"><MapPin size={17}/><span>Enviar para<br/><b>Rio Branco</b></span></div>
+        <button onClick={showTestNotice} className="ml-auto rounded p-2 text-[#2d3277]" aria-label="Carrinho demonstrativo"><ShoppingCart size={23}/></button>
       </div>
       <nav className="mx-auto flex max-w-[1240px] flex-wrap items-center justify-between gap-x-5 gap-y-2 px-4 pb-3 text-[12px] text-[#514b28]">
-        <div className="flex flex-wrap items-center gap-x-5 gap-y-2"><span>Categorias⌄</span><span>Ofertas</span><span>Árvores de Natal</span><span>Decoração</span><span>Inspirações</span><span>Atendimento</span></div>
-        <div className="flex items-center gap-4"><span>Conta demonstrativa</span><span>Compras</span></div>
+        <div className="flex flex-wrap items-center gap-x-5 gap-y-2"><span>Categorias⌄</span><span>Ofertas</span><span>Cupons</span><span>Supermercado</span><span>Moda</span><span>Vender</span><span>Contato</span></div>
+        <div className="flex items-center gap-4"><span>Minha conta (demonstração)</span><span>Compras</span></div>
       </nav>
     </header>
 
     <div className="border-b border-[#e4c64b] bg-[#fff8c5] px-3 py-2 text-center text-[11px] font-bold tracking-wide text-[#594d12]">
-      <Info size={14} className="mr-1 inline-block"/> PÁGINA DE TESTE — NÃO É OFICIAL, NÃO REALIZA VENDAS E NÃO PROCESSA PAGAMENTOS.
+      <Info size={14} className="mr-1 inline-block"/> PROTÓTIPO INDEPENDENTE — NÃO É UMA PÁGINA OFICIAL DO MERCADO LIVRE.
     </div>
 
-    <main className="mx-auto max-w-[1240px] px-3 pb-12 pt-4 sm:px-4">
+    <main className="mx-auto max-w-[1200px] px-3 pb-12 pt-4 sm:px-4">
       <div className="mb-3 flex flex-wrap items-center gap-1 text-[11px] text-[#3483fa]">
         <span>Voltar à lista</span><span className="mx-2 text-gray-400">|</span><span>Casa, Móveis e Decoração</span><ChevronRight size={12}/><span>Enfeites e Decoração da Casa</span><ChevronRight size={12}/><span>Árvores e Enfeites de Natal</span>
       </div>
       <div className="mb-3 flex justify-between text-[11px] text-[#3483fa]"><span>Você também pode estar interessado: pinheiro natural · árvore de natal · decoração natalina</span><span className="hidden sm:block">Compartilhar</span></div>
 
-      <section className="rounded-md bg-white p-3 shadow-sm sm:p-5">
+      <section className="rounded-sm bg-white p-3 shadow-sm sm:p-5">
         <div className="grid grid-cols-1 gap-5 lg:grid-cols-[1.42fr_1.05fr_.92fr] lg:gap-6">
           <div className="min-w-0">
-            <div className="mb-2 flex items-center justify-between text-[11px] text-[#999]"><span>Novo | Produto demonstrativo</span><button onClick={()=>setFavorito(!favorito)} className="p-1 text-[#3483fa]" aria-label="Favoritar produto"><Heart size={22} fill={favorito?"#3483fa":"none"}/></button></div>
+            <div className="mb-2 flex items-center justify-between text-[11px] text-[#999]"><span>Novo | Demonstração</span><button onClick={()=>setFavorito(!favorito)} className="p-1 text-[#3483fa]" aria-label="Favoritar produto"><Heart size={22} fill={favorito?"#3483fa":"none"}/></button></div>
             <div className="flex gap-2">
               <div className="hidden w-[58px] shrink-0 flex-col gap-2 sm:flex">{fotos.map((src,i)=><button key={i} onClick={()=>setFoto(i)} className={`h-[62px] overflow-hidden rounded border bg-white p-1 ${foto===i?"border-2 border-[#3483fa]":"border-gray-200"}`}><img src={src} alt={`Miniatura do produto ${i+1}`} className="h-full w-full object-contain"/></button>)}</div>
               <button onClick={()=>setFoto((foto+1)%fotos.length)} className="flex min-h-[300px] flex-1 items-center justify-center bg-white sm:min-h-[430px]" aria-label="Próxima foto"><img src={fotos[foto]} alt="Árvore de Natal Pinheiro Norueguês do Norte com luzes LED" className="max-h-[430px] w-full object-contain"/></button>
@@ -83,8 +83,8 @@ function Produto() {
           </div>
 
           <div className="min-w-0">
-            <div className="mb-2 text-[11px] text-[#3483fa]">Produto demonstrativo · Pinheiro Norueguês</div>
-            <h1 className="text-[21px] font-medium leading-tight">Árvore De Natal Pinheiro Norueguês Do Norte Com Luzes LED</h1>
+            <div className="mb-2 text-[11px] text-[#3483fa]">Anúncio demonstrativo</div>
+            <h1 className="text-[21px] font-medium leading-tight">Árvore de Natal Pinheiro Norueguês com Luzes LED</h1>
             <div className="mt-2 flex items-center gap-2 text-[13px]"><span className="text-[#3483fa]">4,9 <span className="tracking-[1px]">★★★★★</span></span><span className="text-[#3483fa]">(avaliações de demonstração)</span></div>
             <div className="mt-5">
               <p className="text-sm text-[#999] line-through">{brl(s.de)}</p>
@@ -103,7 +103,7 @@ function Produto() {
           </div>
 
           <aside className="min-w-0 space-y-3">
-            <div className="rounded-lg border border-[#eee] p-4">
+            <div className="rounded-md border border-[#eee] p-4">
               <span className="inline-block rounded-sm bg-[#008f52] px-2 py-1 text-[10px] font-bold text-white">FRETE GRÁTIS</span>
               <p className="mt-3 text-[13px] font-semibold">Receba no endereço desejado</p>
               <p className="mt-1 text-[12px] text-[#777]">Prazo de entrega ilustrativo, exibido apenas para demonstração.</p>
@@ -113,7 +113,7 @@ function Produto() {
               <button onClick={showTestNotice} className="mt-2 flex w-full items-center justify-center gap-2 rounded-md bg-[#d9e9ff] py-3 text-[14px] font-semibold text-[#3483fa]"><ShoppingCart size={16}/> Adicionar ao carrinho</button>
               <div className="mt-4 space-y-3 border-t pt-3 text-[12px]"><p className="flex gap-2"><ShieldCheck size={17} className="shrink-0 text-[#3483fa]"/><span><b className="text-[#3483fa]">Compra protegida</b><br/><span className="text-[#777]">Informação visual de demonstração.</span></span></p><p className="flex gap-2"><Truck size={17} className="shrink-0 text-[#3483fa]"/><span><b className="text-[#3483fa]">Devolução grátis</b><br/><span className="text-[#777]">Condição ilustrativa.</span></span></p></div>
             </div>
-            <div className="rounded-lg border border-[#eee] p-4 text-[12px]"><div className="flex items-center gap-2"><Store size={20} className="text-[#3483fa]"/><b>Informações da loja</b></div><p className="mt-2 font-semibold text-[#3483fa]">Pinheiro Norueguês</p><p className="mt-1 text-[#777]">Perfil de vendedor demonstrativo · Não representa uma loja oficial do marketplace.</p><div className="mt-3 border-t pt-3 text-[#777]">Atendimento e reputação não estão conectados.</div></div>
+            <div className="rounded-lg border border-[#eee] p-4 text-[12px]"><div className="flex items-center gap-2"><Store size={20} className="text-[#3483fa]"/><b>Informações do vendedor</b></div><p className="mt-2 font-semibold text-[#3483fa]">Pinheiro Norueguês</p><p className="mt-1 text-[#777]">Vendedor independente · Protótipo sem vínculo com o marketplace.</p><div className="mt-3 border-t pt-3 text-[#777]">Atendimento e reputação não estão conectados.</div></div>
           </aside>
         </div>
       </section>
