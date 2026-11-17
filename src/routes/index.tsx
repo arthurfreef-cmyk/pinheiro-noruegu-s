@@ -1,11 +1,13 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
+import { Search, ShoppingCart, Heart, ChevronRight, MapPin, ShieldCheck, Truck, Store, Star, MessageCircle, ThumbsUp, Check, ChevronDown, Camera, Info, Menu } from "lucide-react";
 import arvore from "@/assets/arvore.webp.asset.json";
 
 export const Route = createFileRoute("/")({
   head: () => ({ meta: [
-    { title: "Árvore de Natal Pinheiro Norueguês | Protótipo" },
-    { name: "description", content: "Protótipo visual demonstrativo de página de produto." },
+    { title: "Árvore de Natal Pinheiro Norueguês | Protótipo de interface" },
+    { name: "description", content: "Demonstração visual de uma página de produto. Não realiza vendas." },
+    { name: "robots", content: "noindex,nofollow" },
   ] }),
   component: Produto,
 });
@@ -16,78 +18,157 @@ const tamanhos = [
   { label: "2,40 m", preco: 37.9, de: 137 },
 ];
 const brl = (n: number) => n.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+const reviews = [
+  { nome: "Mariana S.", data: "há 2 semanas", texto: "Parece natural de verdade e ficou linda na sala. Os galhos ficam bem cheios depois de abrir com cuidado.", helpful: 24 },
+  { nome: "Ricardo P.", data: "há 1 mês", texto: "Montagem simples e acabamento muito bonito. As luzes deixam o ambiente bem aconchegante.", helpful: 18 },
+  { nome: "Fernanda L.", data: "há 1 mês", texto: "Gostei do volume e da aparência dos galhos. A árvore ficou ótima na decoração de Natal.", helpful: 12 },
+];
+const perguntas = [
+  ["A árvore acompanha a base?", "Sim, a demonstração considera a base metálica dobrável inclusa."],
+  ["As luzes já vêm instaladas?", "Sim, o modelo apresentado possui iluminação LED branco quente."],
+  ["É possível escolher a altura?", "Sim. Use as opções de altura na área do produto para alternar a variação."],
+];
 
 function Produto() {
   const [t, setT] = useState(0);
   const [qtd, setQtd] = useState(1);
   const [aba, setAba] = useState("Descrição");
   const [foto, setFoto] = useState(0);
+  const [favorito, setFavorito] = useState(false);
+  const [aviso, setAviso] = useState("");
+  const [perguntaAberta, setPerguntaAberta] = useState<number | null>(0);
   const s = tamanhos[t] ?? tamanhos[0]!;
-  const fotos = [arvore.url, arvore.url, arvore.url, arvore.url];
+  const fotos = [arvore.url, arvore.url, arvore.url, arvore.url, arvore.url, arvore.url];
+  const showTestNotice = () => setAviso("Esta é uma página de teste. Nenhuma compra, reserva ou transação será realizada.");
 
   return <div className="min-h-screen bg-[#ededed] text-[#333]">
-    <header className="bg-[#fff159]">
-      <div className="mx-auto flex max-w-[1200px] items-center gap-5 px-4 py-3">
-        <div className="flex shrink-0 items-center gap-2">
-          <span className="flex h-10 w-14 items-center justify-center rounded-full border-[3px] border-[#263b80] bg-white text-xl font-bold text-[#263b80]">↔</span>
-          <span className="hidden text-[19px] font-bold tracking-tight text-[#263b80] sm:block">mercado livre</span>
+    <div className="sticky top-0 z-40 border-b border-[#e2c900] bg-[#fff159]">
+      <div className="mx-auto flex max-w-[1240px] items-center gap-4 px-4 py-3">
+        <div className="flex shrink-0 items-center gap-2.5" aria-label="Mercado Livre — identidade visual demonstrativa">
+          <span className="flex h-[34px] w-[54px] items-center justify-center rounded-[50%] border-[2px] border-[#2d3277] bg-[#ffe600]">
+            <svg viewBox="0 0 56 32" className="h-7 w-12" role="img" aria-label="Símbolo de aperto de mãos ilustrativo">
+              <path d="M5 12 12 6l9 2 6 5 5-4 8-2 10 7-8 11-8-3-5 3-8-5-5 1Z" fill="#fff" stroke="#2d3277" strokeWidth="1.8" strokeLinejoin="round"/>
+              <path d="m19 13 8 6 4-3 8 5M12 17l6 5 4-2m14-11-8 6m-7-7-5 6" fill="none" stroke="#2d3277" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </span>
+          <span className="hidden text-[18px] font-bold leading-[15px] tracking-[-.8px] text-[#2d3277] sm:block">mercado<br/>livre</span>
         </div>
-        <div className="flex h-10 flex-1 items-center overflow-hidden rounded-sm bg-white shadow-sm">
-          <input aria-label="Buscar produtos" placeholder="Buscar produtos, marcas e muito mais..." className="min-w-0 flex-1 px-4 text-sm outline-none" />
-          <button className="border-l px-4 text-xl text-[#555]" aria-label="Buscar">⌕</button>
+        <div className="hidden min-w-[150px] flex-1 items-center rounded-sm border border-[#eee] bg-white px-3 py-2 shadow-sm sm:flex">
+          <input aria-label="Buscar produtos" placeholder="Buscar produtos, marcas e muito mais..." className="min-w-0 flex-1 text-[14px] outline-none" />
+          <Search size={19} className="text-[#555]" />
         </div>
-        <span className="hidden text-xs lg:block">Ofertas especiais<br/><b>Árvore de Natal</b></span>
+        <div className="hidden items-center gap-2 rounded-full bg-white/70 px-3 py-2 text-[11px] text-[#2d3277] lg:flex"><MapPin size={16}/><span>Enviar para<br/><b>Rio Branco</b></span></div>
+        <div className="ml-auto hidden rounded-full bg-white px-4 py-2 text-[11px] text-[#333] md:block"><b className="text-[#3483fa]">meli+</b> &nbsp; ASSINE E APROVEITE</div>
+        <button onClick={showTestNotice} className="rounded p-2 text-[#2d3277] sm:hidden" aria-label="Abrir busca"><Search size={21}/></button>
+        <button onClick={showTestNotice} className="relative rounded p-2 text-[#2d3277]" aria-label="Carrinho demonstrativo"><ShoppingCart size={22}/></button>
       </div>
-      <nav className="mx-auto hidden max-w-[1200px] justify-between px-4 pb-3 text-[12px] text-[#514b28] md:flex">
-        <div className="flex gap-5"><span>Categorias</span><span>Ofertas</span><span>Cupons</span><span>Supermercado</span><span>Moda</span><span>Mercado Play</span><span>Vender</span></div>
-        <div className="flex gap-4"><span>Enviar para o Brasil</span><span>Crie sua conta</span><span>Entre</span><span>Compras</span></div>
+      <nav className="mx-auto hidden max-w-[1240px] items-center justify-between px-4 pb-3 text-[12px] text-[#514b28] md:flex">
+        <div className="flex items-center gap-5"><span className="flex items-center gap-1"><MapPin size={14}/> Rio Branco 69900-104</span><span>Categorias⌄</span><span>Ofertas</span><span>Cupons</span><span>Supermercado</span><span>Moda</span><span>Mercado Play</span><span>Vender</span><span>Contato</span></div>
+        <div className="flex items-center gap-5"><span>Crie a sua conta</span><span>Entre</span><span>Compras</span></div>
       </nav>
-    </header>
-    <div className="border-b border-[#eadf9c] bg-[#fff8c5] py-1.5 text-center text-[10px] font-bold tracking-wide text-[#594d12]">PROTÓTIPO VISUAL NÃO OFICIAL · AMBIENTE DE TESTE · SEM VÍNCULO COM O MERCADO LIVRE</div>
+    </div>
 
-    <main className="mx-auto max-w-[1200px] px-3 pb-10 pt-4 sm:px-4">
-      <div className="mb-3 flex flex-wrap gap-1 text-[11px] text-[#3483fa]"><span>Início</span><span className="text-gray-400">›</span><span>Casa, Móveis e Decoração</span><span className="text-gray-400">›</span><span>Natal</span><span className="text-gray-400">›</span><span>Árvores de Natal</span></div>
+    <div className="border-b border-[#e4c64b] bg-[#fff8c5] px-3 py-2 text-center text-[11px] font-bold tracking-wide text-[#594d12]">
+      <Info size={14} className="mr-1 inline-block"/> PÁGINA DE TESTE — NÃO É OFICIAL, NÃO REALIZA VENDAS E NÃO PROCESSA PAGAMENTOS.
+    </div>
+
+    <main className="mx-auto max-w-[1240px] px-3 pb-12 pt-4 sm:px-4">
+      <div className="mb-3 flex flex-wrap items-center gap-1 text-[11px] text-[#3483fa]">
+        <span>Voltar à lista</span><span className="mx-2 text-gray-400">|</span><span>Casa, Móveis e Decoração</span><ChevronRight size={12}/><span>Enfeites e Decoração da Casa</span><ChevronRight size={12}/><span>Árvores e Enfeites de Natal</span>
+      </div>
+      <div className="mb-3 flex justify-between text-[11px] text-[#3483fa]"><span>Você também pode estar interessado: pinheiro natural · árvore de natal · decoração natalina</span><span className="hidden sm:block">Compartilhar</span></div>
+
       <section className="rounded-md bg-white p-3 shadow-sm sm:p-5">
-        <div className="grid grid-cols-1 gap-5 lg:grid-cols-[1.55fr_1fr_.88fr] lg:gap-6">
+        <div className="grid grid-cols-1 gap-5 lg:grid-cols-[1.42fr_1.05fr_.92fr] lg:gap-6">
           <div className="min-w-0">
-            <div className="mb-2 flex justify-between text-[11px] text-[#999]"><span>Novo | + de 50 vendidos</span><button className="text-xl text-[#3483fa]" aria-label="Favoritar">♡</button></div>
+            <div className="mb-2 flex items-center justify-between text-[11px] text-[#999]"><span>Novo | Produto demonstrativo</span><button onClick={()=>setFavorito(!favorito)} className="p-1 text-[#3483fa]" aria-label="Favoritar produto"><Heart size={22} fill={favorito?"#3483fa":"none"}/></button></div>
             <div className="flex gap-2">
-              <div className="hidden w-[54px] shrink-0 flex-col gap-2 sm:flex">{fotos.map((src,i)=><button key={i} onClick={()=>setFoto(i)} className={`h-[58px] overflow-hidden rounded border ${foto===i?"border-2 border-[#3483fa]":"border-gray-200"}`}><img src={src} alt={`Miniatura ${i+1}`} className="h-full w-full object-contain"/></button>)}</div>
-              <button onClick={()=>setFoto((foto+1)%fotos.length)} className="flex min-h-[300px] flex-1 items-center justify-center sm:min-h-[430px]"><img src={fotos[foto]} alt="Árvore de Natal Pinheiro Norueguês do Norte" className="max-h-[430px] w-full object-contain"/></button>
+              <div className="hidden w-[58px] shrink-0 flex-col gap-2 sm:flex">{fotos.map((src,i)=><button key={i} onClick={()=>setFoto(i)} className={`h-[62px] overflow-hidden rounded border bg-white p-1 ${foto===i?"border-2 border-[#3483fa]":"border-gray-200"}`}><img src={src} alt={`Miniatura do produto ${i+1}`} className="h-full w-full object-contain"/></button>)}</div>
+              <button onClick={()=>setFoto((foto+1)%fotos.length)} className="flex min-h-[300px] flex-1 items-center justify-center bg-white sm:min-h-[430px]" aria-label="Próxima foto"><img src={fotos[foto]} alt="Árvore de Natal Pinheiro Norueguês do Norte com luzes LED" className="max-h-[430px] w-full object-contain"/></button>
             </div>
             <div className="mt-3 flex justify-center gap-2 sm:hidden">{fotos.map((_,i)=><button key={i} onClick={()=>setFoto(i)} aria-label={`Foto ${i+1}`} className={`h-1.5 w-5 rounded-full ${foto===i?"bg-[#3483fa]":"bg-gray-300"}`}/>)}</div>
-            <div className="mt-5 border-t pt-4"><h3 className="font-semibold">O que você precisa saber sobre este produto</h3><ul className="mt-3 list-disc space-y-2 pl-5 text-[13px] leading-relaxed text-[#555]"><li>Galhos densos em dois tons de verde e aparência natural.</li><li>Luzes LED em branco quente distribuídas pelos galhos.</li><li>Base metálica dobrável e montagem em partes encaixáveis.</li><li>Disponível em três alturas: 1,80 m, 2,10 m e 2,40 m.</li></ul></div>
+            <div className="mt-5 border-t pt-4">
+              <h3 className="font-semibold">O que você precisa saber sobre este produto</h3>
+              <ul className="mt-3 list-disc space-y-2 pl-5 text-[13px] leading-relaxed text-[#555]">
+                <li>Galhos densos em dois tons de verde e aparência natural.</li><li>Luzes LED em branco quente distribuídas pelos galhos.</li><li>Base metálica dobrável e montagem em partes encaixáveis.</li><li>Disponível em três alturas: 1,80 m, 2,10 m e 2,40 m.</li>
+              </ul>
+            </div>
           </div>
 
           <div className="min-w-0">
-            <p className="mb-2 text-[11px] text-[#777]">Novo | +50 vendidos</p>
+            <div className="mb-2 text-[11px] text-[#3483fa]">Produto demonstrativo · Pinheiro Norueguês</div>
             <h1 className="text-[21px] font-medium leading-tight">Árvore De Natal Pinheiro Norueguês Do Norte Com Luzes LED</h1>
-            <div className="mt-2 text-[13px]"><span className="text-[#3483fa]">4,9 ★★★★★</span> <span className="text-[#3483fa]">(312 avaliações)</span></div>
-            <div className="mt-5"><p className="text-sm text-[#999] line-through">{brl(s.de)}</p><div className="flex items-center gap-2"><span className="text-[32px] font-light">{brl(s.preco)}</span><span className="text-sm font-medium text-[#00a650]">{Math.round((1-s.preco/s.de)*100)}% OFF</span></div><p className="mt-1 text-[13px] text-[#00a650]">em até 3x sem juros</p><p className="mt-1 text-[11px] text-[#888]">Preço demonstrativo do projeto.</p></div>
-            <div className="mt-5"><p className="text-[13px] font-semibold">Altura: <span className="font-normal">{s.label}</span></p><div className="mt-2 flex flex-wrap gap-2">{tamanhos.map((x,i)=><button key={x.label} onClick={()=>setT(i)} className={`rounded border px-3 py-2 text-[12px] ${i===t?"border-[#3483fa] bg-[#f5faff] text-[#3483fa]":"border-gray-300"}`}>{x.label}</button>)}</div></div>
-            <div className="mt-5 border-t pt-4"><h3 className="text-[15px] font-semibold">Características do produto</h3><div className="mt-3 grid grid-cols-2 gap-3 text-[12px]"><div><span className="block text-[#999]">Marca</span>Pinheiro Norueguês</div><div><span className="block text-[#999]">Modelo</span>Árvore iluminada</div><div><span className="block text-[#999]">Material</span>PE + PVC</div><div><span className="block text-[#999]">Iluminação</span>LED branco quente</div></div><button onClick={()=>setAba("Ficha técnica")} className="mt-4 text-[12px] text-[#3483fa]">Ver todas as características</button></div>
+            <div className="mt-2 flex items-center gap-2 text-[13px]"><span className="text-[#3483fa]">4,9 <span className="tracking-[1px]">★★★★★</span></span><span className="text-[#3483fa]">(avaliações de demonstração)</span></div>
+            <div className="mt-5">
+              <p className="text-sm text-[#999] line-through">{brl(s.de)}</p>
+              <div className="flex flex-wrap items-center gap-2"><span className="text-[32px] font-light">{brl(s.preco)}</span><span className="rounded-sm bg-[#00a650] px-1.5 py-0.5 text-[12px] font-medium text-white">{Math.round((1-s.preco/s.de)*100)}% OFF</span></div>
+              <p className="mt-1 text-[13px] text-[#00a650]">3x {brl(s.preco/3)} sem juros</p>
+              <button onClick={showTestNotice} className="mt-1 text-[12px] text-[#3483fa]">Ver meios de pagamento</button>
+              <p className="mt-1 text-[10px] text-[#888]">Preço e condições exibidos apenas para teste de interface.</p>
+            </div>
+            <div className="mt-5 border-t pt-4">
+              <p className="text-[13px] font-semibold">Cor: <span className="font-normal">Verde</span></p>
+              <div className="mt-2 flex gap-2"><button onClick={()=>setFoto(0)} className="h-[58px] w-[58px] rounded border-2 border-[#3483fa] p-1"><img src={arvore.url} alt="Cor verde" className="h-full w-full object-contain"/></button></div>
+              <p className="mt-3 text-[13px] font-semibold">Altura: <span className="font-normal">{s.label}</span></p>
+              <div className="mt-2 flex flex-wrap gap-2">{tamanhos.map((x,i)=><button key={x.label} onClick={()=>setT(i)} className={`rounded border px-3 py-2 text-[12px] ${i===t?"border-[#3483fa] bg-[#f5faff] text-[#3483fa]":"border-gray-300"}`}>{x.label}</button>)}</div>
+            </div>
+            <div className="mt-5 border-t pt-4">
+              <h3 className="text-[15px] font-semibold">Características do produto</h3>
+              <div className="mt-3 grid grid-cols-2 gap-3 text-[12px]"><div><span className="block text-[#999]">Marca</span>Pinheiro Norueguês</div><div><span className="block text-[#999]">Modelo</span>Árvore iluminada</div><div><span className="block text-[#999]">Material</span>PE + PVC</div><div><span className="block text-[#999]">Iluminação</span>LED branco quente</div></div>
+              <button onClick={()=>setAba("Ficha técnica")} className="mt-4 text-[12px] text-[#3483fa]">Conferir todas as características <ChevronDown size={13} className="inline"/></button>
+            </div>
           </div>
 
-          <aside className="min-w-0">
+          <aside className="min-w-0 space-y-3">
             <div className="rounded-lg border border-[#eee] p-4">
-              <p className="text-[12px] font-semibold text-[#00a650]">● Frete grátis</p><p className="mt-1 text-[13px] font-semibold">Chegará antes do Natal</p><p className="mt-1 text-[11px] text-[#777]">Prazo ilustrativo para demonstração.</p>
-              <div className="mt-4 border-t pt-3"><p className="text-[13px] font-semibold">Estoque disponível</p><label className="mt-2 block text-[12px] text-[#666]">Quantidade</label><select value={qtd} onChange={e=>setQtd(Number(e.target.value))} className="mt-1 w-full rounded border border-gray-300 bg-white px-3 py-2 text-[13px]"><option value={1}>1 unidade</option><option value={2}>2 unidades</option><option value={3}>3 unidades</option><option value={4}>4 unidades</option></select></div>
-              <button className="mt-4 w-full rounded-md bg-[#3483fa] py-3 text-[14px] font-semibold text-white">Comprar agora</button><button className="mt-2 w-full rounded-md bg-[#d9e9ff] py-3 text-[14px] font-semibold text-[#3483fa]">Adicionar ao carrinho</button>
-              <div className="mt-4 space-y-3 border-t pt-3 text-[12px]"><p><b className="text-[#3483fa]">Compra protegida</b><br/><span className="text-[#777]">Informação ilustrativa do protótipo.</span></p><p><b className="text-[#3483fa]">Devolução grátis</b><br/><span className="text-[#777]">Consulte as condições da loja.</span></p><p><b className="text-[#3483fa]">12 meses de garantia</b></p></div>
+              <span className="inline-block rounded-sm bg-[#008f52] px-2 py-1 text-[10px] font-bold text-white">FRETE GRÁTIS</span>
+              <p className="mt-3 text-[13px] font-semibold">Receba no endereço desejado</p>
+              <p className="mt-1 text-[12px] text-[#777]">Prazo de entrega ilustrativo, exibido apenas para demonstração.</p>
+              <button onClick={showTestNotice} className="mt-2 text-[12px] text-[#3483fa]">Mais detalhes e formas de entrega</button>
+              <div className="mt-4 border-t pt-3"><p className="text-[13px] font-semibold">Estoque disponível</p><p className="mt-1 text-[11px] text-[#777]">Quantidade demonstrativa</p><label className="mt-2 block text-[12px] text-[#666]">Quantidade</label><select value={qtd} onChange={e=>setQtd(Number(e.target.value))} className="mt-1 w-full rounded border border-gray-300 bg-white px-3 py-2 text-[13px]"><option value={1}>1 unidade</option><option value={2}>2 unidades</option><option value={3}>3 unidades</option><option value={4}>4 unidades</option></select></div>
+              <button onClick={showTestNotice} className="mt-4 w-full rounded-md bg-[#3483fa] py-3 text-[14px] font-semibold text-white hover:bg-[#2968c8]">Comprar agora</button>
+              <button onClick={showTestNotice} className="mt-2 flex w-full items-center justify-center gap-2 rounded-md bg-[#d9e9ff] py-3 text-[14px] font-semibold text-[#3483fa]"><ShoppingCart size={16}/> Adicionar ao carrinho</button>
+              <div className="mt-4 space-y-3 border-t pt-3 text-[12px]"><p className="flex gap-2"><ShieldCheck size={17} className="shrink-0 text-[#3483fa]"/><span><b className="text-[#3483fa]">Compra protegida</b><br/><span className="text-[#777]">Informação visual de demonstração.</span></span></p><p className="flex gap-2"><Truck size={17} className="shrink-0 text-[#3483fa]"/><span><b className="text-[#3483fa]">Devolução grátis</b><br/><span className="text-[#777]">Condição ilustrativa.</span></span></p></div>
             </div>
-            <div className="mt-3 rounded-lg border border-[#eee] bg-white p-4 text-[12px]"><b>Informações da loja</b><p className="mt-2 text-[#777]">Produto apresentado em protótipo visual para teste de interface.</p></div>
+            <div className="rounded-lg border border-[#eee] p-4 text-[12px]"><div className="flex items-center gap-2"><Store size={20} className="text-[#3483fa]"/><b>Informações da loja</b></div><p className="mt-2 font-semibold text-[#3483fa]">Loja Pinheiro Norueguês</p><p className="mt-1 text-[#777]">Perfil de vendedor demonstrativo · Não representa uma loja oficial do marketplace.</p><div className="mt-3 border-t pt-3 text-[#777]">Atendimento e reputação não estão conectados.</div></div>
           </aside>
         </div>
       </section>
 
-      <section className="mt-4 rounded-md bg-white p-4 shadow-sm sm:p-6"><h2 className="text-xl font-medium">Produtos relacionados</h2><div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">{["Árvore de Natal Pinheiro Norueguês","Árvore de Natal com LED","Pinheiro de Natal decorativo","Árvore de Natal tradicional"].map((name,i)=><div key={i} className="rounded border border-[#eee] p-2"><img src={arvore.url} alt={name} className="h-32 w-full object-contain"/><p className="mt-2 text-[12px]">{name}</p><p className="mt-2 text-lg">{brl(37.9)}</p><p className="text-[11px] text-[#00a650]">Frete grátis</p></div>)}</div></section>
-
-      <section className="mt-4 rounded-md bg-white p-4 shadow-sm sm:p-6"><div className="flex flex-wrap gap-5 border-b text-[14px]">{["Descrição","Ficha técnica","Avaliações"].map(k=><button key={k} onClick={()=>setAba(k)} className={`border-b-2 pb-3 ${aba===k?"border-[#3483fa] font-semibold text-[#3483fa]":"border-transparent text-[#666]"}`}>{k}</button>)}</div>
-        {aba==="Descrição"&&<div className="max-w-3xl py-5 text-[13px] leading-7 text-[#555]"><p>Inspirada nas florestas do norte da Noruega, esta árvore traz galhos densos em dois tons de verde, com pontas moldadas que imitam as agulhas de um pinheiro de verdade.</p><p className="mt-3">Já vem com luzes LED em branco quente distribuídas galho a galho — é só montar, ligar e decorar.</p></div>}
-        {aba==="Ficha técnica"&&<div className="grid max-w-3xl gap-x-10 py-4 text-[13px] sm:grid-cols-2">{[["Altura","1,80 m / 2,10 m / 2,40 m"],["Luzes","LED branco quente"],["Galhos","PE + PVC, toque realista"],["Base","Metal dobrável"],["Montagem","3 partes encaixáveis"],["Garantia","12 meses"]].map(([k,v])=><div key={k} className="flex justify-between border-b py-3"><span className="text-[#888]">{k}</span><b>{v}</b></div>)}</div>}
-        {aba==="Avaliações"&&<div className="max-w-3xl space-y-5 py-5 text-[13px]">{[["Mariana S.","Parece natural de verdade, as visitas acharam que era pinheiro real!"],["Ricardo P.","Montei em 10 minutos. As luzes são lindas, bem aconchegantes."],["Fernanda L.","Cheia, volumosa e chegou muito bem embalada."]].map(([n,txt])=><div key={n} className="border-b pb-4"><div className="text-[#3483fa]">★★★★★</div><p className="mt-1">{txt}</p><p className="mt-1 text-[11px] text-[#888]">{n} · Avaliação ilustrativa do protótipo</p></div>)}</div>}
+      <section className="mt-4 rounded-md bg-white p-4 shadow-sm sm:p-6">
+        <h2 className="text-xl font-medium">Produtos relacionados</h2>
+        <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">{["Árvore de Natal Pinheiro Norueguês","Árvore de Natal com LED","Pinheiro de Natal decorativo","Árvore de Natal tradicional"].map((name,i)=><button key={i} onClick={showTestNotice} className="rounded border border-[#eee] p-2 text-left transition hover:shadow-md"><img src={arvore.url} alt={name} className="h-32 w-full object-contain"/><p className="mt-2 text-[12px]">{name}</p><p className="mt-2 text-lg">{brl(s.preco)}</p><p className="text-[11px] text-[#00a650]">Frete grátis · demonstração</p></button>)}</div>
       </section>
-      <footer className="py-8 text-center text-[11px] text-[#777]">Protótipo de interface para avaliação · Não é uma página oficial do Mercado Livre e não realiza transações.</footer>
+
+      <section className="mt-4 rounded-md bg-white p-4 shadow-sm sm:p-6">
+        <div className="flex flex-wrap gap-5 border-b text-[14px]">{["Descrição","Ficha técnica","Avaliações"].map(k=><button key={k} onClick={()=>setAba(k)} className={`border-b-2 pb-3 ${aba===k?"border-[#3483fa] font-semibold text-[#3483fa]":"border-transparent text-[#666]"}`}>{k}</button>)}</div>
+        {aba==="Descrição"&&<div className="max-w-3xl py-5 text-[13px] leading-7 text-[#555]"><h2 className="mb-3 text-lg font-medium text-[#333]">Árvore de Natal Pinheiro Norueguês</h2><p>Inspirada nas florestas do norte da Noruega, esta árvore traz galhos densos em dois tons de verde, com pontas moldadas que imitam as agulhas de um pinheiro natural.</p><p className="mt-3">O modelo demonstrativo possui luzes LED em branco quente distribuídas pelos galhos, base metálica dobrável e montagem em partes encaixáveis.</p><div className="mt-5 grid gap-3 sm:grid-cols-3"><div className="rounded bg-[#f5f5f5] p-3"><b>Visual natural</b><p className="text-[12px]">Galhos verdes e volumosos.</p></div><div className="rounded bg-[#f5f5f5] p-3"><b>Luzes LED</b><p className="text-[12px]">Iluminação branco quente.</p></div><div className="rounded bg-[#f5f5f5] p-3"><b>Montagem prática</b><p className="text-[12px]">Estrutura em partes encaixáveis.</p></div></div></div>}
+        {aba==="Ficha técnica"&&<div className="grid max-w-4xl gap-8 py-5 md:grid-cols-2"><div><h3 className="mb-3 font-semibold">Características principais</h3>{[["Marca","Pinheiro Norueguês"],["Modelo","Árvore iluminada"],["Formato","Tradicional"],["Cor","Verde"]].map(([k,v])=><div key={k} className="grid grid-cols-2 border-b bg-[#f5f5f5] px-3 py-3 text-[12px] even:bg-white"><span>{k}</span><b className="font-normal">{v}</b></div>)}</div><div><h3 className="mb-3 font-semibold">Peso e dimensões</h3>{[["Alturas disponíveis","1,80 m · 2,10 m · 2,40 m"],["Materiais","PE + PVC e metal"],["Iluminação","LED branco quente"],["Base","Metal dobrável"],["Montagem","Partes encaixáveis"]].map(([k,v])=><div key={k} className="grid grid-cols-2 border-b bg-[#f5f5f5] px-3 py-3 text-[12px] even:bg-white"><span>{k}</span><b className="font-normal">{v}</b></div>)}</div></div>}
+        {aba==="Avaliações"&&<div className="py-5">
+          <div className="mb-6 grid gap-6 border-b pb-6 sm:grid-cols-[180px_1fr]"><div><p className="text-4xl font-light">4,9 <span className="text-xl text-[#3483fa]">★</span></p><p className="mt-1 text-[12px] text-[#777]">Nota demonstrativa</p><div className="mt-2 text-[#3483fa]">★★★★★</div></div><div className="space-y-2 text-[12px]">{[["5 estrelas","94%"],["4 estrelas","4%"],["3 estrelas","1%"],["2 estrelas","1%"],["1 estrela","0%"]].map(([k,v])=><div key={k} className="flex items-center gap-3"><span className="w-16 text-[#777]">{k}</span><div className="h-2 flex-1 rounded bg-[#eee]"><div className="h-2 rounded bg-[#3483fa]" style={{width:v}}/></div><span className="w-8 text-right text-[#777]">{v}</span></div>)}</div></div>
+          <div className="mb-4 rounded border border-[#f0d982] bg-[#fff9df] p-3 text-[11px] text-[#6b5710]"><Info size={14} className="mr-1 inline"/> Depoimentos e notas abaixo são exemplos fictícios usados somente para testar o layout. Não são avaliações reais de compradores.</div>
+          <div className="max-w-3xl space-y-5">{reviews.map((r)=><article key={r.nome} className="border-b pb-5"><div className="flex items-center justify-between"><span className="text-[13px] font-semibold">{r.nome}</span><span className="text-[11px] text-[#999]">{r.data}</span></div><div className="mt-1 text-[13px] tracking-[1px] text-[#3483fa]">★★★★★</div><p className="mt-2 text-[13px] leading-6 text-[#555]">{r.texto}</p><div className="mt-3 flex items-center gap-1 text-[11px] text-[#777]"><ThumbsUp size={13}/> Foi útil? <span className="ml-1">{r.helpful} pessoas</span></div></article>)}</div>
+        </div>}
+      </section>
+
+      <section className="mt-4 rounded-md bg-white p-4 shadow-sm sm:p-6">
+        <div className="flex items-center gap-2"><MessageCircle size={20} className="text-[#3483fa]"/><h2 className="text-xl font-medium">Perguntas e respostas</h2></div>
+        <p className="mt-1 text-[12px] text-[#777]">Respostas ilustrativas para demonstração do componente.</p>
+        <div className="mt-4 max-w-4xl divide-y">{perguntas.map(([q,a],i)=><div key={q} className="py-4"><button onClick={()=>setPerguntaAberta(perguntaAberta===i?null:i)} className="flex w-full items-center justify-between text-left text-[13px] font-medium"><span>{q}</span><ChevronDown size={16} className={perguntaAberta===i?"rotate-180 transition":"transition"}/></button>{perguntaAberta===i&&<div className="mt-3 rounded bg-[#f7f7f7] p-3 text-[13px] text-[#666]"><b>Resposta:</b> {a}</div>}</div>)}</div>
+      </section>
+
+      <section className="mt-4 rounded-md bg-white p-4 shadow-sm sm:p-6">
+        <div className="flex items-center gap-2"><Camera size={20} className="text-[#3483fa]"/><h2 className="text-xl font-medium">Fotos do produto</h2></div>
+        <p className="mt-1 text-[11px] text-[#888]">Imagem de demonstração do produto cadastrado.</p>
+        <div className="mt-5 flex justify-center"><img src={arvore.url} alt="Foto demonstrativa da árvore de Natal Pinheiro Norueguês" className="max-h-[520px] w-full max-w-[650px] object-contain"/></div>
+      </section>
+
+      <footer className="mt-6 border-t border-[#ddd] py-7 text-center text-[11px] leading-6 text-[#777]">
+        <b className="text-[#555]">PROTÓTIPO DE INTERFACE — NÃO OFICIAL</b><br/>
+        Esta página reproduz elementos visuais para fins de teste e demonstração. Não possui vínculo com o Mercado Livre, não anuncia uma oferta real, não confirma estoque ou frete e não realiza vendas nem processa pagamentos.<br/>
+        Produto e preço mantidos conforme o cadastro atual do projeto.
+      </footer>
     </main>
+    {aviso&&<div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4" role="dialog" aria-modal="true" aria-label="Aviso de página de teste"><div className="w-full max-w-sm rounded-lg bg-white p-6 shadow-xl"><div className="flex items-center gap-2 text-[#3483fa]"><Info size={21}/><b>Ambiente de teste</b></div><p className="mt-3 text-[14px] leading-6 text-[#555]">{aviso}</p><button onClick={()=>setAviso("")} className="mt-5 w-full rounded bg-[#3483fa] py-2.5 text-sm font-semibold text-white">Entendi</button></div></div>}
   </div>;
 }
